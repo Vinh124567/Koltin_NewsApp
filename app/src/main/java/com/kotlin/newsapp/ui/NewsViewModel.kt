@@ -188,12 +188,32 @@ class NewsViewModel(
         _isArticleSaved.value = newValue
     }
 
+//////////////////////////////////////////////////////////////////////////////////
+    fun addToHistory(article: Article){
+        firebaseResponsitory.addToHistory(article)
+    }
+
     fun loadHistory(){
         firebaseResponsitory.loadHistory(_articlesHistory)
     }
 
-    fun addToHistory(article: Article){
-    firebaseResponsitory.addToHistory(article)
+
+
+    fun addToFavorites(article: Article) = viewModelScope.launch {
+//    if (firebaseResponsitory.addToFavorite(article)) {
+        firebaseResponsitory.addToFavorite(article)
+//        updateArticleSaveStatus(true)
+//    }else {
+//        updateArticleSaveStatus(false)
+//    }
+    }
+
+    fun isExistsFavoriteNews(article: Article)=viewModelScope.launch {
+    if(firebaseResponsitory.isExistsFavariteNews(article)){
+        updateArticleSaveStatus(true);
+        }else{
+        updateArticleSaveStatus(false);
+    }
     }
 
 

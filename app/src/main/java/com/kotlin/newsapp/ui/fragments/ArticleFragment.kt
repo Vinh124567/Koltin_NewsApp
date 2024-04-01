@@ -61,6 +61,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
                 }
             } else {
                 newsViewModel.addNewsToFavorites(article)
+                newsViewModel.addToFavorites(article)
                 Snackbar.make(view, "Added to favorites", Snackbar.LENGTH_SHORT).show()
             }
         }
