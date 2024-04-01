@@ -8,12 +8,14 @@ import android.widget.AbsListView
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kotlin.newsapp.R
 import com.kotlin.newsapp.adapters.NewsAdapter
 import com.kotlin.newsapp.databinding.FragmentHeadlinesBinding
@@ -47,6 +49,7 @@ class HeadlinesFragment : Fragment(R.layout.fragment_headlines) {
         newsViewModel = (activity as NewsActivity).newsViewModel
 
         setupHeadlinesRecycler()
+        showBottomNavigationBar()
 
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
@@ -156,6 +159,14 @@ class HeadlinesFragment : Fragment(R.layout.fragment_headlines) {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(this@HeadlinesFragment.scrollListener)
+        }
+    }
+
+    private fun showBottomNavigationBar() {
+        val activity = requireActivity()
+        if (activity is AppCompatActivity) {
+            val bottomNavigationView = activity.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+            bottomNavigationView.visibility = View.VISIBLE
         }
     }
 }
