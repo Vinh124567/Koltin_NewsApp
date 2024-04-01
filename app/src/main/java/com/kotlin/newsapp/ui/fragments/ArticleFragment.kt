@@ -42,6 +42,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
         newsViewModel = (activity as NewsActivity).newsViewModel
         var article = args.article
+        newsViewModel.addToHistory(article)
 
         setContent(args.article)
 

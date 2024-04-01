@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/news_nav_graph"
-    app:startDestination="@id/headlinesFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/headlinesFragment"
@@ -37,5 +37,32 @@
         <argument
             android:name="article"
             app:argType="com.kotlin.newsapp.models.Article" />
+    </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.kotlin.newsapp.ui.fragments.HistoryFragment"
+        android:label="HistoryFragment" >
+        <action
+            android:id="@+id/action_historyFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.kotlin.newsapp.ui.fragments.SignInFragment"
+        android:label="SignInFragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_headlinesFragment"
+            app:destination="@id/headlinesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.kotlin.newsapp.ui.fragments.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
 </navigation>

@@ -5,18 +5,18 @@ import androidx.room.PrimaryKey
 import com.kotlin.newsapp.db.ARTICLES_TABLE
 import java.io.Serializable
 
-@Entity(
-    tableName = ARTICLES_TABLE
-)
+@Entity(tableName = ARTICLES_TABLE)
 data class Article(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = 0,
-    val author: String?,
-    val content: String?,
-    val description: String?,
-    val publishedAt: String?,
-    val source: Source?,
-    val title: String?,
-    val url: String?,
-    val urlToImage: String?
-): Serializable
+    var author: String? = "",
+    var content: String? = "",
+    var description: String? = "",
+    var publishedAt: String? = "",
+    var source: Source? = null,
+    var title: String? = "",
+    var url: String? = "",
+    var urlToImage: String? = ""
+) : Serializable {
+    constructor() : this(0, "", "", "", "", null, "", "", "") // Thêm constructor không đối số
+}
