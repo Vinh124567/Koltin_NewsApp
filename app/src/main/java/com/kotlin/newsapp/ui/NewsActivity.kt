@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.kotlin.newsapp.Firebase.NewsFirebase
 import com.kotlin.newsapp.R
 import com.kotlin.newsapp.databinding.ActivityNewsBinding
 import com.kotlin.newsapp.db.ArticleDatabase
+import com.kotlin.newsapp.repository.Firebase.FirebaseResponsitory
 import com.kotlin.newsapp.repository.local.NewsLocalRepository
 import com.kotlin.newsapp.repository.remote.NewsRemoteRepository
 
@@ -21,10 +23,11 @@ class NewsActivity : AppCompatActivity() {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val firebaseResponsitory= FirebaseResponsitory(NewsFirebase(this))
         val newsRemoteRepository = NewsRemoteRepository()
         val newsLocalRepository = NewsLocalRepository(ArticleDatabase(this))
         val viewModelProviderFactory =
-            NewsViewModelProviderFactory(application, newsRemoteRepository, newsLocalRepository)
+            NewsViewModelProviderFactory(application, newsRemoteRepository, newsLocalRepository,firebaseResponsitory)
 
         newsViewModel =
             ViewModelProvider(this, viewModelProviderFactory)[NewsViewModel::class.java]

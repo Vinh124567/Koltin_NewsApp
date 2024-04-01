@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kotlin.newsapp.models.Article
 import com.kotlin.newsapp.models.NewsResponse
+import com.kotlin.newsapp.repository.Firebase.FirebaseResponsitory
 import com.kotlin.newsapp.repository.local.NewsLocalRepository
 import com.kotlin.newsapp.repository.remote.NewsRemoteRepository
 import com.kotlin.newsapp.util.Resource
@@ -22,9 +23,13 @@ import java.io.IOException
 class NewsViewModel(
     app: Application,
     private val newsRemoteRepository: NewsRemoteRepository,
-    val newsLocalRepository: NewsLocalRepository
+    val newsLocalRepository: NewsLocalRepository,val firebaseResponsitory: FirebaseResponsitory
 ) :
     AndroidViewModel(app) {
+
+    val _articlesHistory=MutableLiveData<List<Article>>()
+    val articleHistory: LiveData<List<Article>> =_articlesHistory
+
     val headlines: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var headlinesPage = 1
     private var headlinesResponse: NewsResponse? = null
@@ -181,6 +186,20 @@ class NewsViewModel(
 
     private fun updateArticleSaveStatus(newValue: Boolean) {
         _isArticleSaved.value = newValue
+    }
+
+    fun loadHistory(){
+        firebaseResponsitory.loadHistory(_articlesHistory)
+    }
+
+    fun addToHistory(article: Article){
+    firebaseResponsitory.addToHistory(article)
+    }
+
+
+
+    fun loginWithEmail(email: String, password: String, callback: (Boolean) -> Unit) {
+        firebaseResponsitory.loginWithEmail(email, password, callback)
     }
 }
 
