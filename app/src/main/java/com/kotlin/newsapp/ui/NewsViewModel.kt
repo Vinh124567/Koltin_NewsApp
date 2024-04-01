@@ -26,9 +26,11 @@ class NewsViewModel(
     val newsLocalRepository: NewsLocalRepository,val firebaseResponsitory: FirebaseResponsitory
 ) :
     AndroidViewModel(app) {
-
     val _articlesHistory=MutableLiveData<List<Article>>()
     val articleHistory: LiveData<List<Article>> =_articlesHistory
+
+    val _articlesFavorite=MutableLiveData<List<Article>>()
+    val articleFavorite: LiveData<List<Article>> =_articlesFavorite
 
     val headlines: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var headlinesPage = 1
@@ -198,7 +200,6 @@ class NewsViewModel(
     }
 
 
-
     fun addToFavorites(article: Article) = viewModelScope.launch {
 //    if (firebaseResponsitory.addToFavorite(article)) {
         firebaseResponsitory.addToFavorite(article)
@@ -209,11 +210,21 @@ class NewsViewModel(
     }
 
     fun isExistsFavoriteNews(article: Article)=viewModelScope.launch {
-    if(firebaseResponsitory.isExistsFavariteNews(article)){
+    if(firebaseResponsitory.isExistsFavoriteNews(article)){
         updateArticleSaveStatus(true);
         }else{
         updateArticleSaveStatus(false);
     }
+    }
+
+    fun loadFavorite(){
+        firebaseResponsitory.loadFavorite(_articlesFavorite)
+    }
+
+    fun removeFavoriteNews(article: Article)=viewModelScope.launch {
+        firebaseResponsitory.removeFavoriteNews(article)
+        updateArticleSaveStatus(false)
+
     }
 
 

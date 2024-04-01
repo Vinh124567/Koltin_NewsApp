@@ -52,7 +52,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
         binding.btnBookmark.setOnClickListener {
             if (newsViewModel.isArticleSaved.value == true) {
-                newsViewModel.deleteArticleByPublishedAt(article.publishedAt ?: "")
+                newsViewModel.removeFavoriteNews(article)
                 Snackbar.make(view, "Remove Success", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo") {
                         newsViewModel.addNewsToFavorites(article)
@@ -66,7 +66,8 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
             }
         }
 
-        newsViewModel.getFavoriteNewsByPublishedAt(article.publishedAt ?: "")
+//        newsViewModel.getFavoriteNewsByPublishedAt(article.publishedAt ?: "")
+        newsViewModel.isExistsFavoriteNews(article)
 
         newsViewModel.isArticleSaved.observe(viewLifecycleOwner) { status ->
             if (status) {

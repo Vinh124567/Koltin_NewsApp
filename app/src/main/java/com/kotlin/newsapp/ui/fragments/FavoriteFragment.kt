@@ -63,7 +63,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val article = newsAdapter.differ.currentList[position]
-                newsViewModel.deleteArticle(article)
+                newsViewModel.removeFavoriteNews(article)
                 Snackbar.make(view, "Remove Success", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo") {
                         newsViewModel.addNewsToFavorites(article)
@@ -77,7 +77,8 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
             attachToRecyclerView((binding.recyclerFavourites))
         }
 
-        newsViewModel.getFavoriteNews().observe(viewLifecycleOwner) { articles ->
+        newsViewModel.loadFavorite()
+        newsViewModel.articleFavorite.observe(viewLifecycleOwner) { articles ->
             newsAdapter.differ.submitList(articles)
             if (articles.isNotEmpty()) {
                 hideErrorMessage()
@@ -85,6 +86,14 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
                 showErrorMessage("No data")
             }
         }
+//        newsViewModel.getFavoriteNews().observe(viewLifecycleOwner) { articles ->
+//            newsAdapter.differ.submitList(articles)
+//            if (articles.isNotEmpty()) {
+//                hideErrorMessage()
+//            } else {
+//                showErrorMessage("No data")
+//            }
+//        }
     }
 
     private var isError = false

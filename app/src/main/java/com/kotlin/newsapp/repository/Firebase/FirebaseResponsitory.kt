@@ -16,10 +16,12 @@ class FirebaseResponsitory (  private val firebase:NewsFirebase){
         firebase.registerWithEmail(email,password,callback)
     }
 
-    suspend fun isExistsFavariteNews(article: Article)=firebase.isExistsFavariteNews(article)
+    suspend fun isExistsFavoriteNews(article: Article)=firebase.isExistsFavoriteNews(article)
+    suspend fun removeFavoriteNews(article: Article)=firebase.removeFavoriteNews(article)
     suspend fun addToFavorite(article: Article)=firebase.addTofavorites(article);
     fun addToHistory(article:Article)=firebase.addToHistory(article)
     fun loadHistory(articlesList: MutableLiveData<List<Article>>)=firebase.loadHistory(articlesList)
+    fun loadFavorite(favoriteList: MutableLiveData<List<Article>>)=firebase.loadFavourite(favoriteList)
 }
 
 //fun addToFavorites(article: Article) = viewModelScope.launch {

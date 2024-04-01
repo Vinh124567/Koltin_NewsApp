@@ -44,7 +44,7 @@ class NewsFirebase constructor(context: Context) {
         return success
     }
 
-    suspend fun isExistsFavariteNews(article: Article): Boolean {
+    suspend fun isExistsFavoriteNews(article: Article): Boolean {
         val articleReference = databaseReference.child("FavoriteArticle")
             .child(getCurrentUserUid().toString())
 
@@ -63,6 +63,38 @@ class NewsFirebase constructor(context: Context) {
                     continuation.resume(false)
                 }
             })
+        }
+    }
+
+    fun loadFavourite(favoriteList: MutableLiveData<List<Article>>) {
+        databaseReference.child("FavoriteArticle").child(getCurrentUserUid().toString()).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val articles = mutableListOf<Article>()
+                for (articleSnapshot in dataSnapshot.children) {
+                    val article = articleSnapshot.getValue(Article::class.java)
+                    article?.let {
+                        articles.add(it)
+                    }
+                }
+                favoriteList.postValue(articles)
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                favoriteList.postValue(null)
+            }
+        })
+    }
+
+    suspend fun removeFavoriteNews(article: Article) {
+        val articleReference = databaseReference.child("FavoriteArticle")
+            .child(getCurrentUserUid().toString())
+            .child(article.publishedAt.toString())
+
+        try {
+            // Xóa bài báo khỏi danh sách yêu thích
+            articleReference.removeValue().await()
+            println("Đã xóa bài báo thành công")
+        } catch (e: Exception) {
+            println("Đã xảy ra lỗi khi xóa bài báo: ${e.message}")
         }
     }
 
