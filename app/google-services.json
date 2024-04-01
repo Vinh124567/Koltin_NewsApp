@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "350259979027",
+    "firebase_url": "https://kotlinnewsapp-82b65-default-rtdb.firebaseio.com",
+    "project_id": "kotlinnewsapp-82b65",
+    "storage_bucket": "kotlinnewsapp-82b65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350259979027:android:d10a8ec8618e9d66a170e6",
+        "android_client_info": {
+          "package_name": "com.kotlin.newsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFVsSlOMmDzERZ7RqTcki-FQ5vPYo8wko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
