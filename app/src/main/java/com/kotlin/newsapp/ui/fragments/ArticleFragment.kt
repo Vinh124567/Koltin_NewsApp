@@ -55,12 +55,13 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
                 newsViewModel.removeFavoriteNews(article)
                 Snackbar.make(view, "Remove Success", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo") {
-                        newsViewModel.addNewsToFavorites(article)
+//                        newsViewModel.addNewsToFavorites(article)
+                        newsViewModel.addToFavorites(article)
                     }
                     show()
                 }
             } else {
-                newsViewModel.addNewsToFavorites(article)
+//                newsViewModel.addNewsToFavorites(article)
                 newsViewModel.addToFavorites(article)
                 Snackbar.make(view, "Added to favorites", Snackbar.LENGTH_SHORT).show()
             }

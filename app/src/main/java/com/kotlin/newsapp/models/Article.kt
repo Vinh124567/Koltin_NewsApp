@@ -16,7 +16,8 @@ data class Article(
     var source: Source? = null,
     var title: String? = "",
     var url: String? = "",
-    var urlToImage: String? = ""
+    var urlToImage: String? = "",
+    var time:String?=""
 ) : Serializable {
     constructor() : this(0, "", "", "", "", null, "", "", "") // Thêm constructor không đối số
 }
