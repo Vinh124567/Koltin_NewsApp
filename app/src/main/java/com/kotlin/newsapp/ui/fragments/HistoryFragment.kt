@@ -1,5 +1,6 @@
 package com.kotlin.newsapp.ui.fragments
 
+
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,8 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.kotlin.newsapp.R
 import com.kotlin.newsapp.adapters.HistoryAdapter
-import com.kotlin.newsapp.adapters.NewsAdapter
-import com.kotlin.newsapp.databinding.FragmentFavoriteBinding
+
 import com.kotlin.newsapp.databinding.FragmentHistoryBinding
 import com.kotlin.newsapp.ui.NewsActivity
 import com.kotlin.newsapp.ui.NewsViewModel

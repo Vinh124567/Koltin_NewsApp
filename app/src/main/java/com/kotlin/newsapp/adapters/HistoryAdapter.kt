@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.kotlin.newsapp.R
 import com.kotlin.newsapp.models.Article
 
+
+
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
