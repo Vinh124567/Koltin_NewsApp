@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide
 import com.kotlin.newsapp.R
 import com.kotlin.newsapp.models.Article
 
+
+
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -45,7 +47,6 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ArticleViewHolder>() 
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
-
         articleImage = holder.itemView.findViewById(R.id.articleImage)
         articleTitle = holder.itemView.findViewById(R.id.articleTitle)
         holder.itemView.apply {

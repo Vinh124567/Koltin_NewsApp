@@ -4,16 +4,12 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kotlin.newsapp.models.Article
 import com.kotlin.newsapp.models.NewsResponse
-import com.kotlin.newsapp.repository.Firebase.FirebaseResponsitory
-import com.kotlin.newsapp.repository.local.NewsLocalRepository
 import com.kotlin.newsapp.repository.remote.NewsRemoteRepository
 import com.kotlin.newsapp.util.Resource
 import kotlinx.coroutines.launch
@@ -23,7 +19,7 @@ import java.io.IOException
 class NewsViewModel(
     app: Application,
     private val newsRemoteRepository: NewsRemoteRepository,
-    val newsLocalRepository: NewsLocalRepository,val firebaseResponsitory: FirebaseResponsitory
+
 ) :
     AndroidViewModel(app) {
     val _articlesHistory=MutableLiveData<List<Article>>()
@@ -93,50 +89,7 @@ class NewsViewModel(
         return Resource.Error(response.message())
     }
 
-    fun addNewsToFavorites(article: Article) = viewModelScope.launch {
-        val result = newsLocalRepository.insert(article)
-        if (result > 0) {
-            updateArticleSaveStatus(true)
-        }
-    }
 
-    fun getFavoriteNews() = newsLocalRepository.getFavoriteNews()
-
-    fun getFavoriteNewsByPublishedAt(publishedAt: String) {
-        newsLocalRepository.getFavoriteNewsByPublishedAt(publishedAt).observeForever { article ->
-            if (article?.id != null) {
-                updateArticleSaveStatus(true)
-            } else {
-                updateArticleSaveStatus(false)
-            }
-        }
-    }
-
-    fun deleteArticle(article: Article) = viewModelScope.launch {
-        try {
-            val result = newsLocalRepository.deleteArticle(article)
-            if (result > 0) {
-                updateArticleSaveStatus(false)
-            } else {
-                updateArticleSaveStatus(true)
-            }
-        } catch (e: Exception) {
-            Log.d("", e.toString())
-        }
-    }
-
-    fun deleteArticleByPublishedAt(publishedAt: String) = viewModelScope.launch {
-        try {
-            val result = newsLocalRepository.deleteArticleByPublishedAt(publishedAt)
-            if (result > 0) {
-                updateArticleSaveStatus(false)
-            } else {
-                updateArticleSaveStatus(true)
-            }
-        } catch (e: Exception) {
-            Log.d("", e.toString())
-        }
-    }
 
     private fun internetConnection(context: Context): Boolean {
         (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).apply {
@@ -186,52 +139,16 @@ class NewsViewModel(
         }
     }
 
+    fun update(id:Int,article:Article)=viewModelScope.launch {
+        newsRemoteRepository.update(id,article)
+    }
+
     private fun updateArticleSaveStatus(newValue: Boolean) {
         _isArticleSaved.value = newValue
     }
 
 //////////////////////////////////////////////////////////////////////////////////
-    fun addToHistory(article: Article){
-        firebaseResponsitory.addToHistory(article)
-    }
 
-    fun loadHistory(){
-        firebaseResponsitory.loadHistory(_articlesHistory)
-    }
-
-
-    fun addToFavorites(article: Article) = viewModelScope.launch {
-//    if (firebaseResponsitory.addToFavorite(article)) {
-        firebaseResponsitory.addToFavorite(article)
-//        updateArticleSaveStatus(true)
-//    }else {
-//        updateArticleSaveStatus(false)
-//    }
-    }
-
-    fun isExistsFavoriteNews(article: Article)=viewModelScope.launch {
-    if(firebaseResponsitory.isExistsFavoriteNews(article)){
-        updateArticleSaveStatus(true);
-        }else{
-        updateArticleSaveStatus(false);
-    }
-    }
-
-    fun loadFavorite(){
-        firebaseResponsitory.loadFavorite(_articlesFavorite)
-    }
-
-    fun removeFavoriteNews(article: Article)=viewModelScope.launch {
-        firebaseResponsitory.removeFavoriteNews(article)
-        updateArticleSaveStatus(false)
-
-    }
-
-
-
-    fun loginWithEmail(email: String, password: String, callback: (Boolean) -> Unit) {
-        firebaseResponsitory.loginWithEmail(email, password, callback)
-    }
 }
 
 

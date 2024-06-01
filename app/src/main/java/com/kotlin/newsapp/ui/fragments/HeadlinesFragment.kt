@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kotlin.newsapp.R
+import com.kotlin.newsapp.adapters.HistoryAdapter
 import com.kotlin.newsapp.adapters.NewsAdapter
 import com.kotlin.newsapp.databinding.FragmentHeadlinesBinding
 import com.kotlin.newsapp.ui.NewsActivity
@@ -27,7 +28,7 @@ import com.kotlin.newsapp.util.Resource
 class HeadlinesFragment : Fragment(R.layout.fragment_headlines) {
 
     lateinit var newsViewModel: NewsViewModel
-    private lateinit var newsAdapter: NewsAdapter
+    private lateinit var newsAdapter: HistoryAdapter
     private lateinit var retryButton: Button
     private lateinit var errorText: TextView
     private lateinit var itemHeadlinesError: CardView
@@ -55,7 +56,7 @@ class HeadlinesFragment : Fragment(R.layout.fragment_headlines) {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
             }
-            findNavController().navigate(R.id.action_headlinesFragment_to_articleFragment, bundle)
+            findNavController().navigate(R.id.action_headlinesFragment_to_edtArticleFragment, bundle)
         }
 
         newsViewModel.headlines.observe(viewLifecycleOwner, Observer { response ->
@@ -154,7 +155,7 @@ class HeadlinesFragment : Fragment(R.layout.fragment_headlines) {
     }
 
     private fun setupHeadlinesRecycler() {
-        newsAdapter = NewsAdapter()
+        newsAdapter = HistoryAdapter()
         binding.recyclerHeadlines.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)

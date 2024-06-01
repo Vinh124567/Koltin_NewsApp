@@ -63,10 +63,10 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val article = newsAdapter.differ.currentList[position]
-                newsViewModel.removeFavoriteNews(article)
+
                 Snackbar.make(view, "Remove Success", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo") {
-                        newsViewModel.addNewsToFavorites(article)
+
                     }
                     show()
                 }
@@ -77,7 +77,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
             attachToRecyclerView((binding.recyclerFavourites))
         }
 
-        newsViewModel.loadFavorite()
+
         newsViewModel.articleFavorite.observe(viewLifecycleOwner) { articles ->
             newsAdapter.differ.submitList(articles)
             if (articles.isNotEmpty()) {

@@ -42,7 +42,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
         newsViewModel = (activity as NewsActivity).newsViewModel
         var article = args.article
-        newsViewModel.addToHistory(article)
+
 
         setContent(args.article)
 
@@ -52,23 +52,23 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
         binding.btnBookmark.setOnClickListener {
             if (newsViewModel.isArticleSaved.value == true) {
-                newsViewModel.removeFavoriteNews(article)
+
                 Snackbar.make(view, "Remove Success", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo") {
 //                        newsViewModel.addNewsToFavorites(article)
-                        newsViewModel.addToFavorites(article)
+
                     }
                     show()
                 }
             } else {
 //                newsViewModel.addNewsToFavorites(article)
-                newsViewModel.addToFavorites(article)
+
                 Snackbar.make(view, "Added to favorites", Snackbar.LENGTH_SHORT).show()
             }
         }
 
 //        newsViewModel.getFavoriteNewsByPublishedAt(article.publishedAt ?: "")
-        newsViewModel.isExistsFavoriteNews(article)
+
 
         newsViewModel.isArticleSaved.observe(viewLifecycleOwner) { status ->
             if (status) {

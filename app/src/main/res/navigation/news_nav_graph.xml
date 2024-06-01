@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/news_nav_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/headlinesFragment">
 
     <fragment
         android:id="@+id/headlinesFragment"
@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_headlinesFragment_to_articleFragment"
             app:destination="@id/articleFragment"/>
+        <action
+            android:id="@+id/action_headlinesFragment_to_edtArticleFragment"
+            app:destination="@id/edtArticleFragment" />
 
     </fragment>
     <fragment
@@ -47,22 +50,11 @@
             app:destination="@id/articleFragment" />
     </fragment>
     <fragment
-        android:id="@+id/signInFragment"
-        android:name="com.kotlin.newsapp.ui.fragments.SignInFragment"
-        android:label="SignInFragment" >
-        <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_headlinesFragment"
-            app:destination="@id/headlinesFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.kotlin.newsapp.ui.fragments.SignUpFragment"
-        android:label="SignUpFragment" >
-        <action
-            android:id="@+id/action_signUpFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+        android:id="@+id/edtArticleFragment"
+        android:name="com.kotlin.newsapp.ui.fragments.edtArticleFragment"
+        android:label="edtArticleFragment" >
+    <argument
+        android:name="article"
+        app:argType="com.kotlin.newsapp.models.Article" />
     </fragment>
 </navigation>
