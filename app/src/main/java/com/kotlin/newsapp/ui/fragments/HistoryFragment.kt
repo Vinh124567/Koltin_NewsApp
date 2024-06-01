@@ -1,5 +1,6 @@
 package com.kotlin.newsapp.ui.fragments
 
+
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.kotlin.newsapp.R
-import com.kotlin.newsapp.adapters.NewsAdapter
-import com.kotlin.newsapp.databinding.FragmentFavoriteBinding
+import com.kotlin.newsapp.adapters.HistoryAdapter
+
 import com.kotlin.newsapp.databinding.FragmentHistoryBinding
 import com.kotlin.newsapp.ui.NewsActivity
 import com.kotlin.newsapp.ui.NewsViewModel
@@ -23,7 +24,7 @@ import com.kotlin.newsapp.ui.NewsViewModel
 class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     lateinit var newsViewModel: NewsViewModel
-    lateinit var newsAdapter: NewsAdapter
+    lateinit var historyAdapter: HistoryAdapter
     private lateinit var noItemCard: CardView
     private lateinit var errorText: TextView
     private lateinit var binding: FragmentHistoryBinding
@@ -43,7 +44,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
         setupFavoritesRecycler()
 
-        newsAdapter.setOnItemClickListener {
+        historyAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
             }
@@ -64,11 +65,11 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val article = newsAdapter.differ.currentList[position]
-                newsViewModel.deleteArticle(article)
+                val article = historyAdapter.differ.currentList[position]
+
                 Snackbar.make(view, "Remove Success", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo") {
-                        newsViewModel.addNewsToFavorites(article)
+
                     }
                     show()
                 }
@@ -79,9 +80,9 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
             attachToRecyclerView((binding.recyclerFavourites))
         }
 
-        newsViewModel.loadHistory()
+
         newsViewModel.articleHistory.observe(viewLifecycleOwner) { articles ->
-            newsAdapter.differ.submitList(articles)
+            historyAdapter.differ.submitList(articles)
             if (articles.isNotEmpty()) {
                 hideErrorMessage()
             } else {
@@ -103,9 +104,9 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
     }
 
     private fun setupFavoritesRecycler() {
-        newsAdapter = NewsAdapter()
+        historyAdapter = HistoryAdapter()
         binding.recyclerFavourites.apply {
-            adapter = newsAdapter
+            adapter = historyAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }
